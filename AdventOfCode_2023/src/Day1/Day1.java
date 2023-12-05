@@ -1,35 +1,13 @@
-package Day1;
+package day1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
+import day.Day;
 
-public class Day1 {
-    
-    public ArrayList<String> scan(String path){
-        String absolutePath = System.getProperty("user.dir")+path;
-        ArrayList<String> returnList = new ArrayList<>();
-        
-        try {
-            Scanner scanner = new Scanner(new File(absolutePath));
-
-            while (scanner.hasNextLine()) {
-                returnList.add(scanner.nextLine());
-                
-            }
-            scanner.close();
-            return returnList;
-
-        } catch (FileNotFoundException e) {
-            System.err.println("Die Datei wurde nicht gefunden: " + e.getMessage());
-            return returnList;
-        }
-    }
+public class Day1 extends Day{
 
     public int sumCalbrationValues(){
         ArrayList<String> wordList = new ArrayList<>();
-        wordList = this.scan("/AdventOfCode_2023/src/Day1/input.txt");
+        wordList = this.scan("/day1/input.txt");
         int firstDiget;
         int lastDiget;
         int sum = 0;
