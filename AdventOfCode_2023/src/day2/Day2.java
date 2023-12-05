@@ -11,7 +11,12 @@ public class Day2 extends Day{
             final int blue = 14;
 
             String firstCut = line.split(":")[1];
-            //TEST
+            for (String word : firstCut.split(";|,")) {
+                if (word.split(" ")[1].equals("red")) {
+                    
+                }
+            }
+            
 
 
 
