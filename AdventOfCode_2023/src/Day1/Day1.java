@@ -33,9 +33,9 @@ public class Day1 extends Day{
         int sum = 0;
 
         for (String string : wordList) {
-            firstDiget = version==0 ? this.firstDiget(string)*10 : this.firstNumber(string)*10;
-            lastDiget = version==0 ? this.lastDiget(string) : this.lastNumber(string);
-            System.out.println(lastDiget+" "+firstDiget);
+            firstDiget = version==0 ? firstDiget(string)*10 : firstDiget(replaceNumber(string))*10;
+            lastDiget = version==0 ? lastDiget(string) : lastDiget(replaceNumber(string));
+            //System.out.println(lastDiget+" "+firstDiget);
             sum += firstDiget+lastDiget;
         }
         return sum;
@@ -43,18 +43,11 @@ public class Day1 extends Day{
 
     
 
-    public int lastNumber(String string) {
+    public String replaceNumber(String string) {
         for (String string2 : numberMap.keySet()) {
             string = string.replace(string2, numberMap.get(string2));
         }
-        System.err.println(string);
-        return 0;
-    }
-
-
-
-    private int firstNumber(String string) {
-        return 0;
+        return string;
     }
 
 
