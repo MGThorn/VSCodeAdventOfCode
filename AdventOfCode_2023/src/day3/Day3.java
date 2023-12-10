@@ -22,6 +22,16 @@ public class Day3 extends Day {
         }
 
     }
+    public void initTestField() {
+        int i =0;
+        field = new char[this.scan("/day3/test_input.txt").size()][this.scan("/day3/test_input.txt").get(0).length()];
+        
+        for (String line : this.scan("/day3/test_input.txt")) {
+            char [] temp = line.toCharArray();
+            field[i++] = temp;
+        }
+
+    }
 
     public void run(){
         int sum = 0;
