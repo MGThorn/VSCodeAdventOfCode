@@ -16,6 +16,23 @@ public class Day6 extends Day4 {
         }
         System.out.println("allcounter : " +allCounter);
     }
+    public void init2(){
+        long time = Integer.parseInt(scan("/day6/input.txt").get(0).split(":")[1].replaceAll(" ", ""));
+        long distance = Long.parseLong(scan("/day6/input.txt").get(1).split(":")[1].replaceAll(" ", ""));
+
+        long counter = 0;
+
+        for (long i = 0; i <= time; i++) {
+            long temp = (time-i)*i;
+            if (temp > distance ) {
+                counter++;
+                //System.out.println(counter);
+            }
+        }
+        
+
+        System.out.println(counter);
+    }
 
     private int ammountOfFurtherDistances(String time, String stringDistance) {
         int [] ad = calculateAllDistances(time);
