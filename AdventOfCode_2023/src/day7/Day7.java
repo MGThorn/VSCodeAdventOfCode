@@ -1,6 +1,6 @@
 package day7;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,13 +13,13 @@ public class Day7 extends Day6 {
         
     }
 
-    public void init() {
+    public void init(boolean withoutJoker) {
         ArrayList<String> scan = this.scan("/day7/input.txt");
         hands = new Hand[scan.size()];
         int index = 0;
 
         for (String line : scan) {
-            hands[index++] = new Hand(line.split(" ")[0],Integer.parseInt(line.split(" ")[1]));
+            hands[index++] = withoutJoker ? new Hand(line.split(" ")[0],Integer.parseInt(line.split(" ")[1])) : new JokerHand(line.split(" ")[0],Integer.parseInt(line.split(" ")[1]));
         }
     }
     
@@ -39,6 +39,9 @@ public class Day7 extends Day6 {
         }
         return cumulatedWinnings;
     }
+
+
+    
 
     public void printHandArray() {
         for (Hand hand : hands) {

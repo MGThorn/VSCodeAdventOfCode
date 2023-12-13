@@ -7,7 +7,7 @@ public class Hand implements Comparable<Hand> {
     String hand;
     final char[] handArr;
     final int[] cardsAsValues;
-    final char[] handArrwithJokersReplaced;
+    final int[] handArrwithJokersReplaced;
     final int[] cardsAsValuesWithJokersAs1;
     final int bet;
     int type;
@@ -16,19 +16,29 @@ public class Hand implements Comparable<Hand> {
         this.hand = hand;
         this.handArr = hand.toCharArray();
         this.cardsAsValues = handToCardValues();
-        this.handArrwithJokersReplaced = replaceJokers(); 
         this.cardsAsValuesWithJokersAs1 = revalueCardsWithJequals1();
+        this.handArrwithJokersReplaced = replaceJokers(); 
         this.bet = bet;    
     }
 
-    private char[] replaceJokers() {
+    private int[] replaceJokers() {
         int häufigstesZeichen = Arrays.stream(cardsAsValuesWithJokersAs1).max().getAsInt();
-        
-
-        if (häufigstesZeichen!=1) {
-            
+        int [] ret = cardsAsValuesWithJokersAs1;
+        System.out.println("revvalued");
+        for (int a : cardsAsValuesWithJokersAs1) {
+            System.out.println(a); //Those are still 11 as Joker why ?
         }
-        return null;
+
+        //System.out.println("replaced jokers: ");
+        if (häufigstesZeichen!=1) {
+            for (int i : ret) {
+                i = i== 1 ? häufigstesZeichen : i;
+                //System.err.println(" "+i);
+            }
+        }else{
+            System.out.println("TODO");
+        }
+        return ret;
         
     }
 
@@ -36,8 +46,8 @@ public class Hand implements Comparable<Hand> {
 
     
     public int compareTo(Hand o) {
-        evalHandType();
-        o.evalHandType();
+        evalHandType(cardsAsValues);
+        o.evalHandType(o.cardsAsValues);
         if (this.type != o.type) {
             return Integer.compare(this.type, o.type); //if the Type is Different the better Type wins    
         }else{
@@ -54,12 +64,12 @@ public class Hand implements Comparable<Hand> {
                 + type + "]";
     }
 
-    public void evalHandType() {
+    public void evalHandType(int [] arr) {
         int[] temp = new int[5];
         int i = 0;
         
-        for (char c : handArr) {
-            for (char c2 : handArr) {
+        for (int c : arr) {
+            for (int c2 : arr) {
                 if (c == c2) {
                     temp[i]++;
                 }
@@ -103,12 +113,15 @@ public class Hand implements Comparable<Hand> {
         return ret;
     }
 
+
     private int[] revalueCardsWithJequals1() {
         int [] temp = cardsAsValues;
         for (int i : temp) {
             i = i == 11 ? 1 : i;
+            //This works as intended
         }
         return temp;
+        
     }
     
         
