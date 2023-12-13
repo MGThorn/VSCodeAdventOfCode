@@ -24,7 +24,7 @@ public class Day1 extends Day {
 
     public int sumCalbrationValues(int version) {
         ArrayList<String> wordList = new ArrayList<>();
-        wordList = this.scan("/day1/input.txt");
+        wordList = this.scan("/day1/input2.txt");
         int firstDiget;
         int lastDiget;
         int sum = 0;
@@ -32,8 +32,11 @@ public class Day1 extends Day {
         for (String string : wordList) {
             firstDiget = version == 0 ? firstDiget(string) * 10 : firstDiget(replaceNumber(string)) * 10;
             lastDiget = version == 0 ? lastDiget(string) : lastDiget(replaceNumber(string));
-            // System.out.println(lastDiget+" "+firstDiget);
+            System.out.println(string);
+            System.out.println(firstDiget/10+" | "+lastDiget);
             sum += firstDiget + lastDiget;
+            System.out.println(firstDiget + lastDiget);
+            System.out.println("");
         }
         return sum;
     }
