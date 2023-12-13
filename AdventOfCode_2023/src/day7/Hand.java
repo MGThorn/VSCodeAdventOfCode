@@ -7,6 +7,8 @@ public class Hand implements Comparable<Hand> {
     String hand;
     final char[] handArr;
     final int[] cardsAsValues;
+    final char[] handArrwithJokersReplaced;
+    final int[] cardsAsValuesWithJokersAs1;
     final int bet;
     int type;
 
@@ -14,10 +16,25 @@ public class Hand implements Comparable<Hand> {
         this.hand = hand;
         this.handArr = hand.toCharArray();
         this.cardsAsValues = handToCardValues();
+        this.handArrwithJokersReplaced = replaceJokers(); 
+        this.cardsAsValuesWithJokersAs1 = revalueCardsWithJequals1();
         this.bet = bet;    
     }
 
-    @Override
+    private char[] replaceJokers() {
+        int häufigstesZeichen = Arrays.stream(cardsAsValuesWithJokersAs1).max().getAsInt();
+        
+
+        if (häufigstesZeichen!=1) {
+            
+        }
+        return null;
+        
+    }
+
+    
+
+    
     public int compareTo(Hand o) {
         evalHandType();
         o.evalHandType();
@@ -85,6 +102,15 @@ public class Hand implements Comparable<Hand> {
         }
         return ret;
     }
+
+    private int[] revalueCardsWithJequals1() {
+        int [] temp = cardsAsValues;
+        for (int i : temp) {
+            i = i == 11 ? 1 : i;
+        }
+        return temp;
+    }
+    
         
    
 
