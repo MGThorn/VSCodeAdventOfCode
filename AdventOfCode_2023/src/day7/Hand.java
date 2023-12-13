@@ -1,73 +1,93 @@
 package day7;
 
-public class Hand implements Comparable<Hand>{
+
+import java.util.Arrays;
+
+public class Hand implements Comparable<Hand> {
     String hand;
+    final char[] handArr;
+    final int[] cardsAsValues;
+    final int bet;
     int type;
 
-    public Hand(String hand, int type) {
+    public Hand(String hand, int bet) {
         this.hand = hand;
-        
+        this.handArr = hand.toCharArray();
+        this.cardsAsValues = handToCardValues();
+        this.bet = bet;    
     }
 
     @Override
     public int compareTo(Hand o) {
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
-    }
-    private String sort(String hand) {
-        int[] intHand = convertToArr(hand);
-        intHand = bubbleSort(intHand);
-        hand = convertBackToString(intHand);
-        return hand;
-    }
-
-    private String convertBackToString(int[] intHand) {
-        String hand = "";
-
-        for (int i = 0; i < intHand.length; i++) {
-            hand += intHand[i] < 10 ? intHand[i] : "";
-            for (int value : replaceNum.values()) {
-                hand += intHand[i] == value ? replaceSign.get(value) + "" : "";
-            }
+        evalHandType();
+        o.evalHandType();
+        if (this.type != o.type) {
+            return Integer.compare(this.type, o.type); //if the Type is Different the better Type wins    
+        }else{
+            return Arrays.compare(cardsAsValues, o.cardsAsValues); //if the Type is Same the first Higher Card wins
         }
-        return hand;
+        
     }
 
-    public int[] convertToArr(String hand) {
-        String[] strgArr = removeEmptyFields(hand.split(""));
+    
 
-        for (int i = 0; i < strgArr.length; i++) {
-            for (String key : replaceNum.keySet()) {
-                strgArr[i] = strgArr[i].equals(key) ? replaceNum.get(key) + "" : strgArr[i];
-            }
-        }
-
-        return convertStringArrayToIntArray(strgArr);
-
+    @Override
+    public String toString() {
+        return "Hand [hand=" + hand + ", bet=" + bet + ", cardsAsValues=" + Arrays.toString(cardsAsValues) + ", type="
+                + type + "]";
     }
 
-    private int[] bubbleSort(int[] arr) {
-        int n = arr.length;
-        boolean swapped;
-
-        for (int i = 0; i < n - 1; i++) {
-            swapped = false;
-
-            for (int j = 0; j < n - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-
-                    swapped = true;
+    public void evalHandType() {
+        int[] temp = new int[5];
+        int i = 0;
+        
+        for (char c : handArr) {
+            for (char c2 : handArr) {
+                if (c == c2) {
+                    temp[i]++;
                 }
             }
+            i++;
+        }
+        int max = Arrays.stream(temp).max().getAsInt();
+        int towCounter = (int) Arrays.stream(temp).filter(a -> a == 2).count(); //counts how many twos there are in the whole Array
+        type = max+max*10; 
+        type += towCounter==4 ? 2 : 0; //for Two Pair -> 24 
+        type += max == 3 && towCounter==2 ? 2 : 0; //for FullHouse -> 35
+    }
 
-            if (!swapped) {
-                break;
+    private int [] handToCardValues(){
+        int[] ret = new String(handArr)
+        .chars()
+        .map(Character::getNumericValue)
+        .toArray();;
+        
+        for (int i=0; i < handArr.length ;i++) {
+            switch (handArr[i]) {
+                case 'A':
+                    ret[i] = 14;
+                    break;
+                case 'K':
+                    ret[i] = 13;
+                    break;
+                case 'Q':
+                    ret[i] = 12;
+                    break;
+                case 'J':
+                    ret[i] = 11;
+                    break;
+                case 'T':
+                    ret[i] = 10;
+                    break;
+                default:
+                    break;
             }
         }
-        return arr;
+        return ret;
     }
+        
+   
+
+
     
 }
