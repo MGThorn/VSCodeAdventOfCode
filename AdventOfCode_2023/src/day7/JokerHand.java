@@ -7,20 +7,26 @@ public class JokerHand extends Hand {
     final int[] handArrwithJokersReplaced;
     final int[] cardsAsValuesWithJokersAs1;
 
-    public JokerHand(String hand, int bet) {
+    public JokerHand(String hand, int bet){
         super(hand, bet);
         this.cardsAsValuesWithJokersAs1 = revalueCardsWithJequals1();
         this.handArrwithJokersReplaced = replaceJokers();
     }
 
-    public int compareTo(JokerHand o) {
+    @Override
+    public int compareTo(Hand o) {
+        if (o instanceof JokerHand) {
+        JokerHand otherJokerHand = (JokerHand) o;
+
         evalHandType(handArrwithJokersReplaced);
-        o.evalHandType(o.handArrwithJokersReplaced);
+        o.evalHandType(otherJokerHand.handArrwithJokersReplaced);
         if (this.type != o.type) {
             return Integer.compare(this.type, o.type); // if the Type is Different the better Type wins
         } else {
-            return Arrays.compare(cardsAsValuesWithJokersAs1, o.cardsAsValuesWithJokersAs1); // if the Type is Same the
-                                                                                             // first Higher Card wins
+            return Arrays.compare(cardsAsValuesWithJokersAs1, otherJokerHand.cardsAsValuesWithJokersAs1); // if the Type is Same the first Higher Card wins
+        }
+        }else{
+            return super.compareTo(o);
         }
 
     }

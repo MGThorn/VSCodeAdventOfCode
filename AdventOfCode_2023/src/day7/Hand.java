@@ -16,6 +16,7 @@ public class Hand implements Comparable<Hand> {
         this.bet = bet;
     }
 
+    @Override
     public int compareTo(Hand o) {
         evalHandType(cardsAsValues);
         o.evalHandType(o.cardsAsValues);
